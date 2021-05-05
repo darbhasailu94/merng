@@ -1,28 +1,15 @@
 const { ApolloServer } = require('apollo-server');
-const gql = require('graphql-tag');
 const mongoose = require('mongoose');
 
-const Post = require('./models/Post');
+const resolvers = require('./graphql/resolvers');
 const typeDefs = require('./graphql/typeDefs');
 const { MONGODB } = require('./config.js');
-
-const resolvers = {
-    Query: {
-        async getPosts(){
-            try {
-                const posts = await Post.find();
-                return posts;
-            } catch(err) {
-                throw new Error(err);
-            }
-        }
-    }
-};
 
 const server = new ApolloServer({
     typeDefs,
     resolvers
 });
+
 
 mongoose.connect(MONGODB, { useNewUrlParser: true }).then(() => {
     console.log('mongodb connected');
