@@ -1,8 +1,9 @@
-const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = require('../../config');
 const { UserInputError } = require('apollo-server');
+
+const User = require('../../models/User');
+const { SECRET_KEY } = require('../../config');
 const { validateRegisterInput, validateLoginInput } = require('../../util/validators');
 
 function generateToken(user){
