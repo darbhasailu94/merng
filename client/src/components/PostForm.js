@@ -23,13 +23,14 @@ function PostForm(){
     const onSubmit = (event) => {
         event.preventDefault();
         createPost();
+        setTimeout(function(){window.location.reload()},2000);
     }
     return (
-        <React.Fragment>
+        <>
         <Form onSubmit={onSubmit}>
             <h2>Create a post:</h2>
             <Form.Field>
-                <Form.Input placeholder="Hi World" name="body" onChange={onChange} value={values.body} />
+                <Form.Input placeholder="Hi World" name="body" onChange={onChange} value={values.body} error={error ? true : false} />
                 <Button type="submit" color="teal">
                     <h3>Submit</h3>
                 </Button>
@@ -37,10 +38,12 @@ function PostForm(){
         </Form>
         {error && (
             <div className="ui error message" style={{ marginBottom: 20 }}>
-                <h3>{error.graphQLErrors[0].message}</h3>
+                <ul className="list">
+                    <li>{error.graphQLErrors[0].message}</li>
+                </ul>
             </div>
         )}
-        </React.Fragment>
+        </>
     );
 }
 
