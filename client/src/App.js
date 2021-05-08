@@ -10,18 +10,21 @@ import MenuBar from './components/MenuBar';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import { AuthProvider } from './context/auth.js';
 
 function App() {
   // the Container component basically means <div class="ui container"></div>
   return (
-    <Router>
-      <Container>
-        <MenuBar />
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/login' component={Login}/>
-        <Route exact path='/register' component={Register}/>
-      </Container>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Container>
+          <MenuBar />
+          <Route exact path='/' component={Home}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/register' component={Register}/>
+        </Container>
+      </Router>
+    </AuthProvider>
   );
 }
 

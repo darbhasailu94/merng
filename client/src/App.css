@@ -4,3 +4,7 @@
     size: 2em;
     color: teal;
 }
+.form-container {
+    width: 40%;
+    margin: auto;
+}
