@@ -1,5 +1,4 @@
 const { AuthenticationError } = require('apollo-server');
-const { argsToArgsConfig } = require('graphql/type/definition');
 
 const Post = require('../../models/Post');
 const checkAuth = require('../../util/check-auth.js');
@@ -33,8 +32,12 @@ module.exports = {
             const user = checkAuth(context);
 
             if(body.trim() === ""){
-                throw new Error('Post cannot be empty');
+                throw new Error('Writer Name cannot be empty!');
             }
+            if(body.length > 20){
+                throw new Error('No writer has got such a long Name!')
+            }
+
             const newPost = new Post({
                 body,
                 user:user.id,

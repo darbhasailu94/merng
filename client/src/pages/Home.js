@@ -35,7 +35,7 @@ function Home(){
     return(
         <Grid columns={3} /*divided*/>
             <Grid.Row className="page-title">
-                <h1>Recent Posts</h1>
+                <h1>Recent Authors</h1>
             </Grid.Row>
             <Grid.Row>
                 {user && (
@@ -44,7 +44,7 @@ function Home(){
                     </Grid.Column>
                 )}
                 {loading ? (
-                    <h2>loading posts...</h2>
+                    <h2>loading authors...</h2>
                 ) : (
                     data.getPosts && data.getPosts.map(post => (
                         <Grid.Column key={post.id} style={{ marginBottom: 20 }}>

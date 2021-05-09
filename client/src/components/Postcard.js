@@ -22,7 +22,7 @@ function Postcard({post: {body, createdAt, id, username}}){
                         <Icon name="book" />
                     </Button>
                     <Label basic color="blue" pointing="left">
-                        <span>Details</span>
+                        <span>Books</span>
                     </Label>
                 </Button>
                 {user && user.username === username && <DeleteButton postId={id} />}

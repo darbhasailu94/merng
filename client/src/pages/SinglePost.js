@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, Grid, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth.js';
-
+import PostBook from '../components/PostBook.js';
 function SinglePost(props){
     let postMarkup;
     const { user } = useContext(AuthContext);
@@ -51,6 +51,11 @@ function SinglePost(props){
                                 <DeleteButton postId={id} />
                             )}
                         </Card>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column width={4}>
+                        <PostBook />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

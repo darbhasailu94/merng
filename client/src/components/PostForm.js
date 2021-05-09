@@ -30,9 +30,9 @@ function PostForm(){
     return (
         <>
         <Form onSubmit={onSubmit}>
-            <h2>Create a post:</h2>
+            <h2>Enter your Author:</h2>
             <Form.Field>
-                <Form.Input placeholder="Hi World" name="body" onChange={onChange} value={values.body} error={error ? true : false} />
+                <Form.Input placeholder="Leo Tolstoy" name="body" onChange={onChange} value={values.body} error={error ? true : false} />
                 <Button type="submit" color="teal">
                     <h3>Submit</h3>
                 </Button>
