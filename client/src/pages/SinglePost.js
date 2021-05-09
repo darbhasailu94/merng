@@ -11,11 +11,9 @@ function SinglePost(props){
     const { user } = useContext(AuthContext);
 
     const postId = props.match.params.postId;
-    console.log(postId);
 
     const { loading, data } = useQuery(FETCH_POSTS_QUERY);
     let id,username, body, createdAt;
-    console.log(data.getPosts);
     const alpha = data.getPosts.find(function(post,index){
         if(post.id === postId.substr(1)){
             id = post.id;

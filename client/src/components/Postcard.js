@@ -17,7 +17,7 @@ function Postcard({post: {body, createdAt, id, username}}){
                 <Card.Description>{body}</Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Button as="div" labelPosition="right" as={Link} to={`posts/:${id}`}>
+                <Button labelPosition="right" as={Link} to={`posts/:${id}`}>
                     <Button color="blue" basic>
                         <Icon name="book" />
                     </Button>
