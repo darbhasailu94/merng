@@ -13,6 +13,9 @@ function PostForm(){
     const [createPost, {error}] = useMutation(CREATE_POST_MUTATION, {
         update(_, result){
             console.log(result)
+            if(result){
+                setTimeout(function(){window.location.reload()},1000);
+            }
             values.body = ''
         },
         onError(err){
@@ -23,7 +26,6 @@ function PostForm(){
     const onSubmit = (event) => {
         event.preventDefault();
         createPost();
-        setTimeout(function(){window.location.reload()},2000);
     }
     return (
         <>
@@ -36,13 +38,13 @@ function PostForm(){
                 </Button>
             </Form.Field>
         </Form>
-        {error && (
+        {error && 
             <div className="ui error message" style={{ marginBottom: 20 }}>
                 <ul className="list">
                     <li>{error.graphQLErrors[0].message}</li>
                 </ul>
             </div>
-        )}
+        }
         </>
     );
 }

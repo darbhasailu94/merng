@@ -1,8 +1,13 @@
-import React from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import React, {useContext} from 'react';
+import { Card, Image, Button, Icon, Label } from 'semantic-ui-react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+
+import { AuthContext } from '../context/auth.js';
+import DeleteButton from './DeleteButton.js';
 
 function Postcard({post: {body, createdAt, id, username}}){
+    const { user } = useContext(AuthContext);
     return (
         <Card fluid>
             <Card.Content>
@@ -11,8 +16,16 @@ function Postcard({post: {body, createdAt, id, username}}){
                 <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
                 <Card.Description>{body}</Card.Description>
             </Card.Content>
-            <Card.Content>
-                <p>some buttons later</p>
+            <Card.Content extra>
+                <Button as="div" labelPosition="right" as={Link} to={`posts/:${id}`}>
+                    <Button color="blue" basic>
+                        <Icon name="book" />
+                    </Button>
+                    <Label basic color="blue" pointing="left">
+                        <span>Details</span>
+                    </Label>
+                </Button>
+                {user && user.username === username && <DeleteButton postId={id} />}
             </Card.Content>
         </Card>
     )
