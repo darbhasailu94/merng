@@ -54,7 +54,7 @@ function SinglePost(props){
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
-                    <Grid.Column width={4}>
+                    <Grid.Column width={12}>
                         <PostBook />
                     </Grid.Column>
                 </Grid.Row>
