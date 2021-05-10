@@ -26,30 +26,15 @@ function PostBook(){
             }
         }
     )
-    let title, publisher, publishedAt, pages, type, lang, desc, rating;
     function getBookDetails(e){
         axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:'+ e)
         .then(function (response) {
-          // handle success
-          //const newdata = JSON.parse(response);
-    
+          // handle success    
             const newdata = response.data.items[0].volumeInfo;
-            //exp.push(newdata.title,newdata.authors,newdata.publisher,newdata.publishedDate,newdata.description,newdata.pageCount,newdata.printType,newdata.language,newdata.averageRating, newdata.imageLinks,newdata.infoLink);
-            title = newdata.title;
-            publisher = newdata.publisher;
-            publishedAt = newdata.publishedDate;
-            pages = newdata.pageCount;
-            type = newdata.printType;
-            lang = newdata.language;
-            desc = newdata.description;
-            rating = newdata.averageRating;
-            /*console.log("title : ",title, '\n', "publishedAt : ",publishedAt ,'\n' ,
-            "publisher : ",publisher ,'\n', "pages: ", pages, '\n', "type: ", type, '\n',"lang : ",lang
-            , '\n', "desc : ", desc ,'\n',"rating : ", rating);*/
             setBool(true);
             setViews({...views, masterdata:{
                 title:newdata.title,
-                publisher:publisher,
+                publisher:newdata.publisher,
                 publishedAt:newdata.publishedDate,
                 pages:newdata.pageCount,
                 type:newdata.printType,
@@ -69,12 +54,6 @@ function PostBook(){
           console.log('at least axios working')
         });
     }
-    const items = Object.keys(views.masterdata);
-    const listitems = items.map((item) =>    <li>{item}</li>  );
-    const itemvalues = Object.values(views.masterdata);
-    const listitemvalues = itemvalues.map((listitemvalue) =>    <li>{listitemvalue}</li>  );
-
-
     const onSubmit = () => {
         var isbn = parseInt(values.body);
         if(isbn){
@@ -91,14 +70,14 @@ function PostBook(){
                     <Form onSubmit={onSubmit}>
                         <h2>Enter your Book isbn:</h2>
                     <Form.Field>
-                        <Form.Input placeholder="War and Peace" name="body" onChange={onChange} value={values.body} /* error={error ? true : false} */ />
+                        <Form.Input placeholder="9780590353427" name="body" onChange={onChange} value={values.body} /* error={error ? true : false} */ />
                         <Button type="submit" color="teal">
                             <h3>Submit</h3>
                         </Button>
                     </Form.Field>
                     </Form>
                 </Grid.Column>
-                {views.masterdata.title &&
+                {bool &&
                 <Grid.Column width={8}>
                     <div style={{margintop : 20}}><span>Name :<h3>{views.masterdata.title}</h3></span><hr /></div>
                     <div style={{margintop : 20}}><span>Publisher :<h3>{views.masterdata.publisher}</h3></span><hr /></div>

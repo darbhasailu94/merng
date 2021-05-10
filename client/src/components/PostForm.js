@@ -45,6 +45,7 @@ function PostForm(){
                 </ul>
             </div>
         }
+    
         </>
     );
 }
@@ -58,3 +59,20 @@ mutation createPost($body: String!){
 `
 
 export default PostForm
+
+
+
+
+
+
+
+
+/*
+    {error && 
+            <div className="ui error message" style={{ marginBottom: 20 }}>
+                <ul className="list">
+                    <li>{error.graphQLErrors[0].message}</li>
+                </ul>
+            </div>
+        }
+*/
