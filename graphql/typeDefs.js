@@ -20,14 +20,34 @@ module.exports = gql`
         confirmPassword: String!
         email: String!
     }
+    type Book {
+        id: ID!
+        title: String
+        publisher: String
+        publishedDate: String
+        printType: String
+        language: String
+        description: String
+        bookimg: String
+    }
     type Query {
         getPosts: [Post]
         getPost(postId: ID!): Post
+        getBooks:[Book]
     }
     type Mutation {
         register(registerInput: RegisterInput): User!
         login(username: String!, password: String!): User!
         createPost(body: String!): Post!
         deletePost(postId: ID!): String!
+        createBook(
+            title: String
+            publisher: String
+            publishedDate: String
+            printType: String
+            language: String
+            description: String
+            bookimg: String
+        ): Book
     }
 `;

@@ -1,40 +1,37 @@
 import gql from 'graphql-tag';
 import React, { useContext } from 'react';
 import { useQuery} from '@apollo/client';
-import { Card, CardContent, CardHeader, Grid, Image } from 'semantic-ui-react';
+import { Card, CardContent, CardHeader, Grid, Image,Item } from 'semantic-ui-react';
 import moment from 'moment';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth.js';
-import PostBook from '../components/PostBook.js';
+import NewBook from '../components/NewBook.js';
 function SinglePost(props){
     let postMarkup;
     const { user } = useContext(AuthContext);
 
     const postId = props.match.params.postId;
-
-    const { loading, data } = useQuery(FETCH_POSTS_QUERY);
     let id,username, body, createdAt;
-    const alpha = data.getPosts.find(function(post,index){
-        if(post.id === postId.substr(1)){
-            id = post.id;
-            username = post.username;
-            body = post.body;
-            createdAt = post.createdAt;
-        }
-    })
-    console.log(id, username, body, createdAt);
-    /*
-    const { data: {getPost} }  = useQuery(FETCH_POST_QUERY, {
-        variables: {postId}
-    });
-    console.log(getPost);
-    console.log("hello");
-    */
+    const { loading, data } =  useQuery(FETCH_POSTS_QUERY);
+    const {loading : loadingbooks, data: booksdata} = useQuery(FETCH_BOOKS_QUERY);
+    if(loading){
+        console.log("loading please wait")
+    } else {
+        
+        const alpha =  data.getPosts.find(function(post,index){
+            if(post.id === postId.substr(1)){
+                id = post.id;
+                username = post.username;
+                body = post.body;
+                createdAt = post.createdAt;
+            }
+        })
+    }
     if(!id){
         postMarkup = <p>Loading Post</p>
     } else {
         postMarkup = (
-            <Grid>
+            <Grid columns={12}>
                 <Grid.Row>
                     <Grid.Column width={3}>
                         <Image src="https://react.semantic-ui.com/images/avatar/large/molly.png" size="small" float="right" />
@@ -53,32 +50,46 @@ function SinglePost(props){
                         </Card>
                     </Grid.Column>
                 </Grid.Row>
+                {user && username && (
                 <Grid.Row>
-                    <Grid.Column width={12}>
-                        <PostBook />
+                    <Grid.Column width={10}>
+                        <NewBook />
                     </Grid.Column>
                 </Grid.Row>
+                )}
+                {loadingbooks ? (
+                    <h2>loading books...</h2>
+                ) : (
+                    booksdata.getBooks && booksdata.getBooks.map(book => (
+                        <Grid.Column key={book.id} style={{ marginBottom: 20 }} width={5}>
+                            <Item.Image size='tiny' src={book.bookimg} />
+                            <div>
+                                <h3>Name: {book.title}</h3>
+                                <h5>Publisher : {book.publisher}</h5>
+                                <h5>Published : {book.publishedDate}</h5>
+                                <h6>Type : {book.printType}</h6><h6>Language : {book.language}</h6>
+                                <p>Description : {book.description}</p>
+                            </div>
+                        </Grid.Column>
+                    ))
+                )}
             </Grid>
         )
     }
     return postMarkup;
 }
-/*
-const FETCH_POST_QUERY = gql`
-    query($postId: ID!) {
-        getPost(postId: posterId){
-            id
-            body
-            username
-            createdAt
-        }
-    }
-`
-*/
+
 const FETCH_POSTS_QUERY = gql`
     {
         getPosts {
             id body username createdAt
+        }
+    }
+`
+const FETCH_BOOKS_QUERY = gql`
+    {
+        getBooks{
+            id title publisher publishedDate printType language description bookimg
         }
     }
 `

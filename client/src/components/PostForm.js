@@ -13,9 +13,6 @@ function PostForm(){
     const [createPost, {error}] = useMutation(CREATE_POST_MUTATION, {
         update(_, result){
             console.log(result)
-            if(result){
-                setTimeout(function(){window.location.reload()},1000);
-            }
             values.body = ''
         },
         onError(err){

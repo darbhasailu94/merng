@@ -17,7 +17,7 @@ function Home(){
       //const newdata = JSON.parse(response);
 
         const newdata = response.data.items[0].volumeInfo;
-        exp.push(newdata.title,newdata.authors,newdata.publisher,newdata.publishedDate,newdata.description,newdata.pageCount,newdata.printType,newdata.language,newdata.averageRating, newdata.imageLinks,newdata.infoLink);
+        exp.push(newdata.title,newdata.authors,newdata.publisher,newdata.publishedDate,newdata.description,newdata.pageCount,newdata.printType,newdata.language,newdata, newdata.imageLinks,newdata.infoLink);
         console.log(exp);
     })
     .catch(function (error) {
@@ -47,7 +47,7 @@ function Home(){
                     <h2>loading authors...</h2>
                 ) : (
                     data.getPosts && data.getPosts.map(post => (
-                        <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
+                        <Grid.Column key={post.id} style={{ marginBottom: 20 }} >
                             <Postcard post={post} />
                         </Grid.Column>
                     ))
