@@ -1,25 +1,24 @@
 import gql from 'graphql-tag';
 import React, { useContext } from 'react';
 import { useQuery} from '@apollo/client';
-import { Card, CardContent, CardHeader, Grid, Image,Item } from 'semantic-ui-react';
+import { Card, CardContent, CardHeader, Grid, Image } from 'semantic-ui-react';
 import moment from 'moment';
 import DeleteButton from '../components/DeleteButton';
 import { AuthContext } from '../context/auth.js';
 import NewBook from '../components/NewBook.js';
+import PostBook from '../components/PostBook';
 function SinglePost(props){
     let postMarkup;
     const { user } = useContext(AuthContext);
 
-    const postId = props.match.params.postId;
+    const postId = props.match.params.postId.substr(1);
     let id,username, body, createdAt;
     const { loading, data } =  useQuery(FETCH_POSTS_QUERY);
-    const {loading : loadingbooks, data: booksdata} = useQuery(FETCH_BOOKS_QUERY);
     if(loading){
         console.log("loading please wait")
     } else {
-        
-        const alpha =  data.getPosts.find(function(post,index){
-            if(post.id === postId.substr(1)){
+        data.getPosts.find(function(post,index){
+            if(post.id === postId){
                 id = post.id;
                 username = post.username;
                 body = post.body;
@@ -31,12 +30,12 @@ function SinglePost(props){
         postMarkup = <p>Loading Post</p>
     } else {
         postMarkup = (
-            <Grid columns={12}>
+            <Grid columns={16}>
                 <Grid.Row>
-                    <Grid.Column width={3}>
+                    <Grid.Column width={4}>
                         <Image src="https://react.semantic-ui.com/images/avatar/large/molly.png" size="small" float="right" />
                     </Grid.Column>
-                    <Grid.Column width={9}>
+                    <Grid.Column width={12}>
                         <Card fluid>
                             <CardContent>
                                 <CardHeader>{username}</CardHeader>
@@ -50,28 +49,19 @@ function SinglePost(props){
                         </Card>
                     </Grid.Column>
                 </Grid.Row>
-                {user && username && (
+                {user && user.username === username && (
+                <>
                 <Grid.Row>
-                    <Grid.Column width={10}>
-                        <NewBook />
+                    <Grid.Column width={16}>
+                        <NewBook postId={postId}/>
                     </Grid.Column>
                 </Grid.Row>
-                )}
-                {loadingbooks ? (
-                    <h2>loading books...</h2>
-                ) : (
-                    booksdata.getBooks && booksdata.getBooks.map(book => (
-                        <Grid.Column key={book.id} style={{ marginBottom: 20 }} width={5}>
-                            <Item.Image size='tiny' src={book.bookimg} />
-                            <div>
-                                <h3>Name: {book.title}</h3>
-                                <h5>Publisher : {book.publisher}</h5>
-                                <h5>Published : {book.publishedDate}</h5>
-                                <h6>Type : {book.printType}</h6><h6>Language : {book.language}</h6>
-                                <p>Description : {book.description}</p>
-                            </div>
-                        </Grid.Column>
-                    ))
+                <Grid.Row>
+                    <Grid.Column width={16}>
+                        <PostBook postId={postId}/>
+                    </Grid.Column>
+                </Grid.Row>
+                </>
                 )}
             </Grid>
         )
@@ -83,13 +73,6 @@ const FETCH_POSTS_QUERY = gql`
     {
         getPosts {
             id body username createdAt
-        }
-    }
-`
-const FETCH_BOOKS_QUERY = gql`
-    {
-        getBooks{
-            id title publisher publishedDate printType language description bookimg
         }
     }
 `

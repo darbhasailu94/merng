@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
-function NewBook(){
+function NewBook({postId}){
     const [values, setValues] = useState({
         isbn: ''
     })
@@ -13,7 +13,8 @@ function NewBook(){
         printType: '',
         language: '',
         description: '',
-        bookimg:''
+        bookimg:'',
+        postId:''
     })
     const onChange = (event) => {
         setValues({ ...values, [event.target.name]: event.target.value });
@@ -28,7 +29,8 @@ function NewBook(){
             printType: newbook.items[0].volumeInfo.printType ? newbook.items[0].volumeInfo.printType : " Print Type not found",
             language: newbook.items[0].volumeInfo.language ? newbook.items[0].volumeInfo.language : "Language not found",
             description: newbook.items[0].volumeInfo.description ? newbook.items[0].volumeInfo.description : 'Description not found',
-            bookimg: newbook.items[0].volumeInfo.imageLinks.smallThumbnail ? newbook.items[0].volumeInfo.imageLinks.smallThumbnail : "https://react.semantic-ui.com/images/avatar/large/molly.png"
+            bookimg: newbook.items[0].volumeInfo.imageLinks.smallThumbnail ? newbook.items[0].volumeInfo.imageLinks.smallThumbnail : "https://react.semantic-ui.com/images/avatar/large/molly.png",
+            postId: postId
         });
         console.log(newbook.items[0].volumeInfo);
         //console.log(books.title,books.publisher,books.publishedDate,books.printType,books.description);
@@ -36,9 +38,6 @@ function NewBook(){
     }
     function handleClick(){
         createBook();
-    }
-    function myCallback(){
-        console.log("working")
     }
     const [createBook, {error}] = useMutation(CREATE_BOOK_MUTATION, {
         update(_, result){
@@ -51,9 +50,11 @@ function NewBook(){
             books.description = ''
             books.language = ''
             books.bookimg = ''
+            books.postId = ''
         },
         onError(err){
             console.log(err);
+            console.log(error);
         },
         variables: books
     })
@@ -85,7 +86,8 @@ mutation createBook(
     $printType: String
     $language: String
     $description: String
-    $bookimg: String)
+    $bookimg: String
+    $postId: String)
     {
     createBook(
     title : $title
@@ -94,7 +96,8 @@ mutation createBook(
     printType: $printType
     language: $language
     description: $description
-    bookimg: $bookimg)
+    bookimg: $bookimg
+    postId: $postId)
     {   
         id
         title
@@ -104,6 +107,7 @@ mutation createBook(
         language
         description
         bookimg
+        postId
     }
 }
 `

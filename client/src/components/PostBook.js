@@ -1,24 +1,51 @@
-import React, { useState } from 'react';
-import { Form, Button, Grid } from 'semantic-ui-react';
+import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
-
 import React from 'react'
-import { Image, Item } from 'semantic-ui-react'
+import { Item } from 'semantic-ui-react'
 
-const PostBook = () => (
-    <Item>
-      <Item.Image size='tiny' src="https://react.semantic-ui.com/images/avatar/large/molly.png" />
+function PostBook({postId}) {
+  let newBooks, markUp;
+  const {loading,data} = useQuery(FETCH_BOOKS_QUERY);
+  if(loading){
+    console.log("loading books")
+  } else {
+    newBooks = data.getBooks.filter(function(iterator){
+      return iterator.postId === postId;
+  });
+  console.log(newBooks);
+  }
+  if(loading){
+    console.log("still loading")
+  } else {
+    markUp = (data.getBooks && newBooks.map(book => (
+      <Item.Group className="card-container">
+      <Item>
+        <Item.Image size='small' src={book.bookimg} rounded/>
+        <Item.Content>
+          <Item.Header>{book.title}</Item.Header>
+          <Item.Meta>{book.publisher}</Item.Meta>
+          <Item.Description>
+            <p>{book.description}</p>
+          </Item.Description>
+          <Item.Extra>Released: {book.publishedDate}</Item.Extra>
+          <Item.Extra>Type : {book.printType}</Item.Extra>
+          <Item.Extra>Language: {book.language}</Item.Extra>
+        </Item.Content>
+      </Item>
+    </Item.Group>
+    ))
+      
+    )
+  }
 
-      <Item.Content>
-        <Item.Header>Header</Item.Header>
-        <Item.Meta>Description</Item.Meta>
-        <Item.Description>
-          <Image src='/images/wireframe/short-paragraph.png' />
-        </Item.Description>
-        <Item.Extra>Additional Details</Item.Extra>
-      </Item.Content>
-    </Item>
-)
+return markUp
+}
 
-export default PostBook
+const FETCH_BOOKS_QUERY = gql`
+    {
+        getBooks{
+            id title publisher publishedDate printType language description bookimg postId
+        }
+    }
+`
+export default PostBook;

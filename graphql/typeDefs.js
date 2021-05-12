@@ -29,6 +29,7 @@ module.exports = gql`
         language: String
         description: String
         bookimg: String
+        postId: String
     }
     type Query {
         getPosts: [Post]
@@ -48,6 +49,7 @@ module.exports = gql`
             language: String
             description: String
             bookimg: String
+            postId: String
         ): Book
     }
 `;

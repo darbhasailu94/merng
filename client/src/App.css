@@ -8,3 +8,11 @@
     width: 40%;
     margin: auto;
 }
+.center-container{
+    text-align: center;
+}
+.card-container {
+    background-color: rgb(158, 154, 161);
+    padding: 1em;
+    border-radius: 20px;
+}

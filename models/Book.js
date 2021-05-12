@@ -7,7 +7,8 @@ const bookSchema = new Schema({
     printType: String,
     language: String,
     description: String,
-    bookimg: String 
+    bookimg: String,
+    postId: String
 });
 
 module.exports = model('Book', bookSchema);

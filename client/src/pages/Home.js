@@ -9,26 +9,6 @@ import PostForm from '../components/PostForm';
 //import axios from 'axios';
 
 function Home(){
-    /*
-    var exp = [];
-    axios.get('https://www.googleapis.com/books/v1/volumes?q=isbn:9781451648546')
-    .then(function (response) {
-      // handle success
-      //const newdata = JSON.parse(response);
-
-        const newdata = response.data.items[0].volumeInfo;
-        exp.push(newdata.title,newdata.authors,newdata.publisher,newdata.publishedDate,newdata.description,newdata.pageCount,newdata.printType,newdata.language,newdata, newdata.imageLinks,newdata.infoLink);
-        console.log(exp);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-      console.log('at least axios working')
-    });
-    */
     const { user } = useContext(AuthContext);
     const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 
