@@ -3,15 +3,13 @@ import gql from 'graphql-tag';
 import React from 'react'
 import { Item } from 'semantic-ui-react'
 
-function PostBook({postId}) {
+function Books() {
   let newBooks, markUp;
   const {loading,data} = useQuery(FETCH_BOOKS_QUERY);
   if(loading){
     console.log("loading books")
   } else {
-    newBooks = data.getBooks.filter(function(iterator){
-      return iterator.postId === postId;
-  });
+    newBooks = data.getBooks;
   }
   if(!newBooks){
     markUp = <h2>Loading Books</h2>
@@ -46,4 +44,4 @@ const FETCH_BOOKS_QUERY = gql`
         }
     }
 `
-export default PostBook;
+export default Books;

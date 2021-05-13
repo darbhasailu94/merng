@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import SinglePost from './pages/SinglePost';
 import AuthRoute from './components/AuthRoute.js';
 import { AuthProvider } from './context/auth.js';
+import Books from './pages/Books.js';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <AuthRoute exact path='/login' component={Login}/>
           <AuthRoute exact path='/register' component={Register}/>
           <Route exact path="/posts/:postId" component={SinglePost} />
+          <Route exact path="/books" component={Books} />
         </Container>
       </Router>
     </AuthProvider>

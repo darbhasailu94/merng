@@ -15,13 +15,16 @@ function MenuBar() {
     <Menu pointing secondary size="huge" color="teal">
     <Menu.Item
       name={user.username}
-      active
+      active={activeItem !== 'books'}
       as={Link}
       to="/"
+      onClick={handleItemClick}
     />
     <Menu.Item
       name='books'
       active={activeItem === 'books'}
+      as={Link}
+      to="/books"
       onClick={handleItemClick}
     />
     <Menu.Menu position='right'>

@@ -9,11 +9,20 @@ import NewBook from '../components/NewBook.js';
 import PostBook from '../components/PostBook';
 function SinglePost(props){
     let postMarkup;
+
     const { user } = useContext(AuthContext);
 
     const postId = props.match.params.postId.substr(1);
-    let id,username, body, createdAt;
+    let id,username, body, createdAt, displayname;
     const { loading, data } =  useQuery(FETCH_POSTS_QUERY);
+    function capitalize(smallcap) {  
+        var words = smallcap.split(' ');  
+        var CapitalizedWords = [];  
+        words.forEach(element => {  
+            CapitalizedWords.push(element[0].toUpperCase() + element.slice(1, element.length));  
+        });  
+        return CapitalizedWords.join(' ');  
+    }
     if(loading){
         console.log("loading please wait")
     } else {
@@ -23,6 +32,8 @@ function SinglePost(props){
                 username = post.username;
                 body = post.body;
                 createdAt = post.createdAt;
+
+                displayname= capitalize(post.username.toString());
             }
         })
     }
@@ -38,7 +49,7 @@ function SinglePost(props){
                     <Grid.Column width={12}>
                         <Card fluid>
                             <CardContent>
-                                <CardHeader>{username}</CardHeader>
+                                <CardHeader>{displayname}</CardHeader>
                                 <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
                                 <Card.Description>{body}</Card.Description>
                             </CardContent>
