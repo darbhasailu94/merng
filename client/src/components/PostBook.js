@@ -12,13 +12,12 @@ function PostBook({postId}) {
     newBooks = data.getBooks.filter(function(iterator){
       return iterator.postId === postId;
   });
-  console.log(newBooks);
   }
-  if(loading){
-    console.log("still loading")
+  if(!newBooks){
+    markUp = <h2>Loading Books</h2>
   } else {
     markUp = (data.getBooks && newBooks.map(book => (
-      <Item.Group className="card-container">
+      <Item.Group className="card-container" key={book.id}>
       <Item>
         <Item.Image size='small' src={book.bookimg} rounded/>
         <Item.Content>
@@ -37,7 +36,6 @@ function PostBook({postId}) {
       
     )
   }
-
 return markUp
 }
 

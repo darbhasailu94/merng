@@ -22,7 +22,9 @@ function PostForm(){
     })
     const onSubmit = (event) => {
         event.preventDefault();
+        //alert("Author Created");
         createPost();
+        setTimeout(() => {window.location.reload()}, 1200);
     }
     return (
         <>

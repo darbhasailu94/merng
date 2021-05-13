@@ -33,11 +33,9 @@ function NewBook({postId}){
             postId: postId
         });
         console.log(newbook.items[0].volumeInfo);
+        createBook();
         //console.log(books.title,books.publisher,books.publishedDate,books.printType,books.description);
 
-    }
-    function handleClick(){
-        createBook();
     }
     const [createBook, {error}] = useMutation(CREATE_BOOK_MUTATION, {
         update(_, result){
@@ -61,6 +59,9 @@ function NewBook({postId}){
     const onSubmit = (event) => {
         event.preventDefault();
         getUsers();
+        setTimeout(() => {
+           window.location.reload() 
+        }, 1200);
     }
     return (
             <Form onSubmit={onSubmit}>
@@ -69,9 +70,6 @@ function NewBook({postId}){
                     <Form.Input placeholder="Leo Tolstoy" name="isbn" onChange={onChange} value={values.isbn} />
                     <Button type="submit" color="teal">
                         <h3>Submit</h3>
-                    </Button>
-                    <Button onClick={handleClick}>
-                        press after fetch
                     </Button>
                 </Form.Field>
             </Form>

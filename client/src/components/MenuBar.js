@@ -43,11 +43,6 @@ function MenuBar() {
       as={Link}
       to="/"
     />
-    <Menu.Item
-      name='books'
-      active={activeItem === 'books'}
-      onClick={handleItemClick}
-    />
     <Menu.Menu position='right'>
       <Menu.Item
         name='register'

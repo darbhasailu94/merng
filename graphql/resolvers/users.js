@@ -63,7 +63,7 @@ module.exports = {
 
             const newUser = new User({
                 email,
-                username,
+                username: username.toLowerCase(),
                 password,
                 createdAt: new Date().toISOString()
             });
