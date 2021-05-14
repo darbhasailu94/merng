@@ -30,6 +30,7 @@ module.exports = gql`
         description: String
         bookimg: String
         postId: String
+        createdAt: String
     }
     type Query {
         getPosts: [Post]
@@ -50,6 +51,7 @@ module.exports = gql`
             description: String
             bookimg: String
             postId: String
+            createdAt: String
         ): Book
     }
 `;

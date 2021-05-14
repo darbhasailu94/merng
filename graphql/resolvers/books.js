@@ -23,7 +23,8 @@ Mutation: {
         language,
         description,
         bookimg,
-        postId
+        postId,
+        createdAt
     }){
         //const user = checkAuth(context);
 
@@ -35,7 +36,8 @@ Mutation: {
             language : language,
             description : description,
             bookimg : bookimg,
-            postId: postId
+            postId: postId,
+            createdAt: new Date().toISOString()
         });
 
         const book = await newBook.save();

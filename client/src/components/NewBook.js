@@ -51,7 +51,6 @@ function NewBook({postId}){
             books.postId = ''
         },
         onError(err){
-            console.log(err);
             console.log(error);
         },
         variables: books
@@ -85,7 +84,8 @@ mutation createBook(
     $language: String
     $description: String
     $bookimg: String
-    $postId: String)
+    $postId: String
+    $createdAt: String)
     {
     createBook(
     title : $title
@@ -95,7 +95,8 @@ mutation createBook(
     language: $language
     description: $description
     bookimg: $bookimg
-    postId: $postId)
+    postId: $postId
+    createdAt: $createdAt)
     {   
         id
         title
@@ -106,25 +107,9 @@ mutation createBook(
         description
         bookimg
         postId
+        createdAt
     }
 }
 `
 
 export default NewBook
-
-
-
-
-
-
-
-
-/*
-    {error && 
-            <div className="ui error message" style={{ marginBottom: 20 }}>
-                <ul className="list">
-                    <li>{error.graphQLErrors[0].message}</li>
-                </ul>
-            </div>
-        }
-*/
