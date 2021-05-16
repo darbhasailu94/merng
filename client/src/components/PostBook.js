@@ -41,9 +41,9 @@ return markUp
 
 const FETCH_BOOKS_QUERY = gql`
     {
-        getBooks{
-            id title publisher publishedDate printType language description bookimg postId createdAt
-        }
+      getBooks{
+          id title publisher publishedDate printType language description bookimg postId createdAt
+      }
     }
 `
 export default PostBook;
